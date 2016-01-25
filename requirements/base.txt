@@ -17,3 +17,6 @@ django-localflavor==1.2
 
 # Models & Fields
 django-model-utils==2.4
+
+# Users and Authentication
+django-authtools==1.4.0

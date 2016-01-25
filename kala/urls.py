@@ -6,6 +6,7 @@ urlpatterns = patterns('',
     # url(r'^$', 'kala.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
+    url(r'^accounts/', include('authtools.urls')),
     url(r'^address/', include('apps.address.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )
