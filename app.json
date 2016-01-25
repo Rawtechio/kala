@@ -1,0 +1,7 @@
+{
+  "name": "Kala",
+  "description": "Community engagement platform for Glasgow City Council",
+  "repository": "https://github.com/Rawtechio/kala",
+  "logo": "",
+  "keywords": ["python", "django", "Glasgow", "community"]
+}
