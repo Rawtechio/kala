@@ -1,0 +1,9 @@
+<address class="vcard" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+    <p translate="no" class="adr">
+        <span class="street-address" itemprop="streetAddress">{{ address.street_address }}</span><br />
+        <span class="locality" itemprop="addressLocality">{{ address.city }}</span><br />
+        <span class="region" itemprop="addressRegion">{{ address.county }}</span><br />
+        <span class="country-name" itemprop="addressCountry">{{ address.country }}</span><br />
+        <span class="postal-code" itemprop="postalCode">{{ address.postal_code|upper }}</span>
+    </p>
+</address>
