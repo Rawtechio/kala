@@ -1,6 +1,16 @@
-dj-database-url==0.3.0
+# Django
 Django==1.9.1
-gunicorn==19.4.5
+
+# Database
+dj-database-url==0.3.0
 psycopg2==2.6.1
 SQLAlchemy==1.0.11
+
+# Sysadmin / Ops
+gunicorn==19.4.5
+
+# Static files
 whitenoise==2.0.6
+
+# Address / Localisation
+django-localflavor==1.2
