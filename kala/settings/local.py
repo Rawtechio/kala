@@ -1,8 +1,17 @@
-try:
-    from common import *
-except ImportError as e:
-    pass
+from configurations import Configuration
+from .common import Common
 
-INSTALLED_APPS = INSTALLED_APPS + (
-    'django_extensions',
-)
+
+class Local(Common):
+    # Only enable locally
+    DEBUG = True
+
+    # Well this is super secure
+    SECRET_KEY = "CHANGEME!!CHANGEME!!CHANGEME!!CHANGEME!!CHANGEME!!"
+
+    # Allow all host headers
+    ALLOWED_HOSTS = ['*']
+
+    INSTALLED_APPS = Common.INSTALLED_APPS + (
+        'django_extensions',
+    )
