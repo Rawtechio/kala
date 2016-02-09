@@ -1,0 +1,18 @@
+{% load thumbnail %}
+
+<article itemprop="parentOrganization" itemscope itemtype="http://schema.org/LocalBusiness">
+
+    <h1 itemprop="name">
+        <a href="{% url "organisation:detail" organisation.pk organisation.slug %}" itemprop="url">
+            {{ organisation.name }}
+        </a>
+    </h1>
+
+    <div class='logo'>
+        {% thumbnail organisation.logo "100x100" crop="center" as img %}
+            <img src="{{ img.url }}" width="{{ img.width }}" height="{{ img.height }}" itemprop="logo" />
+        {% endthumbnail %}
+    </div>
+
+    <div itemprop="description">{{ organisation.description }}</div>
+</article>

@@ -1,0 +1,29 @@
+
+<header>
+    <h1>
+        <a href="{% url "users:detail" person.slug %}" itemprop="url">
+            <span itemprop="name">{{ person.name }}</span>
+        </a>
+    </h1>
+    <h2 itemprop="jobTitle">{{ person.job_title }}</h2>
+</header>
+
+<div class="contact_details">
+    <ul>
+        {% if person.email %}
+            <li class="email">
+                <a href="mailto:{{ person.email }}" itemprop="email">{{ person.email }}</a>
+            </li>
+        {% endif %}
+        {% if person.phone_number %}
+            <li class="telephone">
+                <a href="tel:{{ person.phone_number }}" itemprop="telephone">{{ person.phone_number }}</a>
+            </li>
+        {% endif %}
+        {% if person.fax_number %}
+            <li class="fax">
+                <a href="tel:{{ person.fax_number }}" itemprop="fax">{{ person.fax_number }}</a>
+            </li>
+        {% endif %}
+    </ul>
+</div>

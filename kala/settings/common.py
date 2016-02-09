@@ -30,7 +30,13 @@ class Common(Configuration):
         'django.contrib.messages',
         'django.contrib.staticfiles',
         'authtools',
+        'star_ratings',
+        'sorl.thumbnail',
+
+        'apps.users',
         'apps.address',
+        'apps.organisation',
+        'apps.place',
     )
 
     MIDDLEWARE_CLASSES = (
@@ -98,4 +104,7 @@ class Common(Configuration):
     STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
     # Custom user model
-    AUTH_USER_MODEL = 'authtools.User'
+    AUTH_USER_MODEL = 'users.User'
+
+    # Unicode slugify
+    AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'

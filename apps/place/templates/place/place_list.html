@@ -1,0 +1,4 @@
+<ul>
+{% for place in object_list %}
+    <li><a href="/place/{{ place.pk }}/{{ place.slug }}">{{ place.name }}</a></li>
+{% endfor %}

@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from django.views.generic.detail import DetailView
+from apps.utils.views import UUIDDetailView
 from django.views.generic.list import ListView
 
 from .models import Address
 
 
-class AddressDetailView(DetailView):
+class AddressDetailView(UUIDDetailView):
     model = Address
 
 

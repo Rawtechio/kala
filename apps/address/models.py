@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals, absolute_import
 
 # Django
 from django.db import models
 
-# 3rd Party
-from model_utils.models import TimeStampedModel
+# Custom
+from apps.utils.models import TimeStampedUUIDModel
 
 
-class Address(TimeStampedModel):
+class Address(TimeStampedUUIDModel):
     """
     Not every address will look like this. This only deals with UK
     addresses, or countries that have the same address format as the UK.

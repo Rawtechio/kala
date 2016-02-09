@@ -1,0 +1,121 @@
+{% load thumbnail %}
+
+<article itemscope itemtype="http://schema.org/LocalBusiness">
+    <meta itemprop="branchCode" content="{{ place.branch_code }}" />
+
+    <h1 itemprop="name">
+        <a href="{% url "place:detail" place.pk place.slug %}" itemprop="url">
+            {{ place.name }}{% if place.duns %} (<span itemprop="duns">{{ place.duns }}</span>){% endif %}</a>
+    </h1>
+
+    <div class='logo'>
+        {% thumbnail place.logo "100x100" crop="center" as img %}
+            <img src="{{ img.url }}" width="{{ img.width }}" height="{{ img.height }}" itemprop="logo" />
+        {% endthumbnail %}
+    </div>
+
+    {% if place.reviews %}
+        <div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+            <span itemprop="ratingValue">
+                {{ place.aggregate_rating }}
+            </span> star{{ place.aggregate_rating|pluralize }}
+            - based on <span itemprop="reviewCount">
+                {{ place.reviews|length }}
+            </span> review{{ place.reviews|length|pluralize }}
+        </div>
+    {% endif %}
+
+    <div itemprop="description">{{ place.description }}</div>
+
+    {% if not place.active %}
+        <!-- .permanently-closed? -->
+        <div class="permanently-closed">
+        {% if place.dissolution_date %}
+            {% with dd=place.dissolution_date %}
+                <p>This location permanently closed on
+                    <time datetime='{{ dd|date:"Y-m-d" }}' itemprop="dissolutionDate">
+                        {{ dd|date:"l" }} the {{ dd|date:"jS" }} of {{ dd|date:"F, Y" }}.
+                    </time>
+                </p>
+            {% endwith %}
+        {% else %}
+            <p>This location has permanently closed</p>
+        {% endif %}
+        </div>
+        <!-- END: .permanently-closed? -->
+    {% endif %}
+
+    {% if place.address %}
+        <!-- Location contact details -->
+        {% with address=place.address %}
+            {% include "address/address.html" %}
+        {% endwith %}
+    {% endif %}
+
+    <ul>
+        {% if place.email %}
+            <li class="email">
+                <a href="mailto:{{ place.email }}" itemprop="email">{{ place.email }}</a>
+            </li>
+        {% endif %}
+        {% if place.phone_number %}
+            <li class="telephone">
+                <a href="tel:{{ place.phone_number }}" itemprop="telephone">{{ place.phone_number }}</a>
+            </li>
+        {% endif %}
+        {% if place.fax_number %}
+            <li class="fax">
+                <a href="tel:{{ place.fax_number }}" itemprop="fax">{{ place.fax_number }}</a>
+            </li>
+        {% endif %}
+    </ul>
+
+    {% if place.latitude and place.longitude %}
+        <!-- Location Map -->
+        <div class="h-geo geo">
+            <span class="p-latitude latitude" itemprop="latitude" content="{{ place.latitude }}">
+                {{ place.latitude }}
+            </span>
+            <span class="p-longitude longitude"itemprop="longitude" content="{{ place.longitude }}">
+                {{ place.longitude }}
+            </span>
+        </div>
+        <div id="map-{{ place.pk }}"></div>
+        <script>
+            var map = new OpenLayers.Map("map-{{ place.pk }}");
+            map.addLayer(new OpenLayers.Layer.OSM());
+
+            var lonLat = new OpenLayers.LonLat({{ place.latitude }}, {{ place.longitude }})
+                  .transform(
+                    new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+                    map.getProjectionObject() // to Spherical Mercator Projection
+                  );
+
+            var zoom = 16;
+            var markers = new OpenLayers.Layer.Markers( "Markers" );
+            map.addLayer(markers);
+            markers.addMarker(new OpenLayers.Marker(lonLat));
+            map.setCenter(lonLat, zoom);
+        </script>
+        <!-- End location map -->
+    {% endif %}
+
+    {% if place.parent_organisation %}
+        <!-- Parent Organisation -->
+        {% with organisation=place.parent_organisation %}
+            {% include "organisation/organisation.html" %}
+        {% endwith %}
+        <!-- End parent organisation -->
+    {% endif %}
+
+    <!-- This listing was created by -->
+    <section class="owner">
+        <h1>Owner</h1>
+        <article itemprop="member" itemscope itemtype="http://schema.org/Person">
+            {% with person=place.owner %}
+                {% include "users/small_listing.html" %}
+            {% endwith %}
+        </article>
+    </section>
+    <!-- end created by -->
+</article>
